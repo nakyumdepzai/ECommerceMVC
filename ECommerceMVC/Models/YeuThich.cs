@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ECommerceMVC.Data;
+namespace ECommerceMVC.Models;
 
 public partial class YeuThich
 {

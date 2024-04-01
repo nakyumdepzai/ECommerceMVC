@@ -1,4 +1,4 @@
-﻿using ECommerceMVC.Data;
+﻿using ECommerceMVC.Models;
 using ECommerceMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

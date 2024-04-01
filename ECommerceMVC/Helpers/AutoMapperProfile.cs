@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ECommerceMVC.Data;
+using ECommerceMVC.Models;
 using ECommerceMVC.ViewModels;
 
 namespace ECommerceMVC.Helpers

@@ -1,6 +1,9 @@
-using ECommerceMVC.Data;
 using ECommerceMVC.Helpers;
+using ECommerceMVC.Models;
+using ECommerceMVC.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using TimeShareWebProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +22,26 @@ builder.Services.AddSession(options =>
 	options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+	options.LoginPath = "/KhachHang/DangNhap";
+	options.AccessDeniedPath = "/AccessDenied";
+});
+
 // https://docs.automapper.org/en/stable/Dependency-injection.html
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+builder.Services.AddSingleton<IVnPayService, VnPayService>();
+
+
+builder.Services.AddSingleton(x => new PaypalClient(
+		builder.Configuration["PaypalOPtions:AppId"],
+        builder.Configuration["PaypalOPtions:AppSecret"],
+        builder.Configuration["PaypalOPtionsMode"]
+
+    ));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,6 +58,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseSession();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
